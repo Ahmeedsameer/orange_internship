@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CarService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">carshow</a> &gt; <a href="index.source.html" class="el_package">com.orange.carshow.services</a> &gt; <span class="el_source">CarService.java</span></div><h1>CarService.java</h1><pre class="source lang-java linenums">package com.orange.carshow.services;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.orange.carshow.services.dto.CarRequest;
+import com.orange.carshow.services.dto.CardDto;
+
+import jakarta.annotation.PostConstruct;
+
+@Service
+public class CarService {
+
+<span class="fc" id="L20">    private String cars =&quot;&quot;&quot;</span>
+            [
+    {
+        &quot;thumbnail&quot;: &quot;Engines/092686e316f248b9b49a64dba8ac89b1_a9621717-f7d4-4af2-9a45-df4be20cf428.jpeg&quot;,
+        &quot;makeId&quot;: 3,
+        &quot;modelId&quot;: 457,
+        &quot;make&quot;: {
+            &quot;id&quot;: 3,
+            &quot;nameAr&quot;: &quot;مرسيدس&quot;,
+            &quot;nameEn&quot;: &quot;Mercedes&quot;
+        },
+        &quot;model&quot;: {
+            &quot;id&quot;: 457,
+            &quot;nameAr&quot;: &quot;B 200&quot;,
+            &quot;nameEn&quot;: &quot;B 200&quot;
+        },
+        &quot;year&quot;: 2023,
+        &quot;price&quot;: 1675000,
+        &quot;carStatus&quot;: 1
+    },
+    {
+        &quot;thumbnail&quot;: &quot;Engines/6155a812c77e13abc03149c3_119e422e-e7cb-4e87-bbea-8788de70594a.jpeg&quot;,
+        &quot;makeId&quot;: 3,
+        &quot;modelId&quot;: 7,
+        &quot;make&quot;: {
+            &quot;id&quot;: 3,
+            &quot;nameAr&quot;: &quot;مرسيدس&quot;,
+            &quot;nameEn&quot;: &quot;Mercedes&quot;
+        },
+        &quot;model&quot;: {
+            &quot;id&quot;: 7,
+            &quot;nameAr&quot;: &quot;C180&quot;,
+            &quot;nameEn&quot;: &quot;C180&quot;
+        },
+        &quot;year&quot;: 2023,
+        &quot;price&quot;: 2280000,
+        &quot;carStatus&quot;: 1
+    },
+    {
+        &quot;thumbnail&quot;: &quot;Engines/6155b0481479a75b1631670e_b4ec6c7c-2357-48fc-9438-4803284cf2a2.jpeg&quot;,
+        &quot;makeId&quot;: 3,
+        &quot;modelId&quot;: 5,
+        &quot;make&quot;: {
+            &quot;id&quot;: 3,
+            &quot;nameAr&quot;: &quot;مرسيدس&quot;,
+            &quot;nameEn&quot;: &quot;Mercedes&quot;
+        },
+        &quot;model&quot;: {
+            &quot;id&quot;: 5,
+            &quot;nameAr&quot;: &quot;C200&quot;,
+            &quot;nameEn&quot;: &quot;C200&quot;
+        },
+        &quot;year&quot;: 2023,
+        &quot;price&quot;: 2705000,
+        &quot;carStatus&quot;: 1
+    },
+    {
+        &quot;thumbnail&quot;: &quot;Engines/71ffe337f25e476e925d56c1800f628b_8269ef44-5b99-4953-97fe-7ff6ed857b6c.jpeg&quot;,
+        &quot;makeId&quot;: 3,
+        &quot;modelId&quot;: 509,
+        &quot;make&quot;: {
+            &quot;id&quot;: 3,
+            &quot;nameAr&quot;: &quot;مرسيدس&quot;,
+            &quot;nameEn&quot;: &quot;Mercedes&quot;
+        },
+        &quot;model&quot;: {
+            &quot;id&quot;: 509,
+            &quot;nameAr&quot;: &quot;CLA 200&quot;,
+            &quot;nameEn&quot;: &quot;CLA 200&quot;
+        },
+        &quot;year&quot;: 2023,
+        &quot;price&quot;: 1943000,
+        &quot;carStatus&quot;: 1
+    },
+    {
+        &quot;thumbnail&quot;: &quot;Engines/60199e1b110a623ace63578f_2649b04d-6f0a-457a-9beb-aa690e59ba5f.jpeg&quot;,
+        &quot;makeId&quot;: 3,
+        &quot;modelId&quot;: 72,
+        &quot;make&quot;: {
+            &quot;id&quot;: 3,
+            &quot;nameAr&quot;: &quot;مرسيدس&quot;,
+            &quot;nameEn&quot;: &quot;Mercedes&quot;
+        },
+        &quot;model&quot;: {
+            &quot;id&quot;: 72,
+            &quot;nameAr&quot;: &quot;E200&quot;,
+            &quot;nameEn&quot;: &quot;E200&quot;
+        },
+        &quot;year&quot;: 2023,
+        &quot;price&quot;: 2950000,
+        &quot;carStatus&quot;: 1
+    },
+    {
+        &quot;thumbnail&quot;: &quot;Engines/6166c4f7462e7d72432ff671_f4b2860e-ac83-41d0-a3de-28e86de7cb10.jpeg&quot;,
+        &quot;makeId&quot;: 3,
+        &quot;modelId&quot;: 353,
+        &quot;make&quot;: {
+            &quot;id&quot;: 3,
+            &quot;nameAr&quot;: &quot;مرسيدس&quot;,
+            &quot;nameEn&quot;: &quot;Mercedes&quot;
+        },
+        &quot;model&quot;: {
+            &quot;id&quot;: 353,
+            &quot;nameAr&quot;: &quot;E300&quot;,
+            &quot;nameEn&quot;: &quot;E300&quot;
+        },
+        &quot;year&quot;: 2023,
+        &quot;price&quot;: 3950000,
+        &quot;carStatus&quot;: 1
+    },
+    {
+        &quot;thumbnail&quot;: &quot;Engines/6177f3e28a661cbb7cdb587c_4fa6d45b-5095-4b3e-bad3-d8847372f303.jpeg&quot;,
+        &quot;makeId&quot;: 3,
+        &quot;modelId&quot;: 853,
+        &quot;make&quot;: {
+            &quot;id&quot;: 3,
+            &quot;nameAr&quot;: &quot;مرسيدس&quot;,
+            &quot;nameEn&quot;: &quot;Mercedes&quot;
+        },
+        &quot;model&quot;: {
+            &quot;id&quot;: 853,
+            &quot;nameAr&quot;: &quot;E53&quot;,
+            &quot;nameEn&quot;: &quot;E53&quot;
+        },
+        &quot;year&quot;: 2022,
+        &quot;price&quot;: 5100000,
+        &quot;carStatus&quot;: 1
+    },
+    {
+        &quot;thumbnail&quot;: &quot;Engines/6e3e7c5e9a4a_ef4bae70-dfd2-476f-906d-8c3c511aee7f.jpeg&quot;,
+        &quot;makeId&quot;: 3,
+        &quot;modelId&quot;: 1385,
+        &quot;make&quot;: {
+            &quot;id&quot;: 3,
+            &quot;nameAr&quot;: &quot;مرسيدس&quot;,
+            &quot;nameEn&quot;: &quot;Mercedes&quot;
+        },
+        &quot;model&quot;: {
+            &quot;id&quot;: 1385,
+            &quot;nameAr&quot;: &quot;EQA 350 &quot;,
+            &quot;nameEn&quot;: &quot;EQA 350 &quot;
+        },
+        &quot;year&quot;: 2024,
+        &quot;price&quot;: 2500000,
+        &quot;carStatus&quot;: 1
+    },
+    {
+        &quot;thumbnail&quot;: &quot;Engines/61a4cc99af7d9a62ad2456ab_6fe53d7d-99dc-48f8-a7c9-4798909d8ca7.jpeg&quot;,
+        &quot;makeId&quot;: 3,
+        &quot;modelId&quot;: 636,
+        &quot;make&quot;: {
+            &quot;id&quot;: 3,
+            &quot;nameAr&quot;: &quot;مرسيدس&quot;,
+            &quot;nameEn&quot;: &quot;Mercedes&quot;
+        },
+        &quot;model&quot;: {
+            &quot;id&quot;: 636,
+            &quot;nameAr&quot;: &quot;G 500&quot;,
+            &quot;nameEn&quot;: &quot;G 500&quot;
+        },
+        &quot;year&quot;: 2022,
+        &quot;price&quot;: 5500000,
+        &quot;carStatus&quot;: 1
+    },
+    {
+        &quot;thumbnail&quot;: &quot;Engines/61a4daecaf7d9a62ad2456e9_7bb301b4-03ca-4f1e-a2e1-a82792bff729.jpeg&quot;,
+        &quot;makeId&quot;: 3,
+        &quot;modelId&quot;: 825,
+        &quot;make&quot;: {
+            &quot;id&quot;: 3,
+            &quot;nameAr&quot;: &quot;مرسيدس&quot;,
+            &quot;nameEn&quot;: &quot;Mercedes&quot;
+        },
+        &quot;model&quot;: {
+            &quot;id&quot;: 825,
+            &quot;nameAr&quot;: &quot;G 63&quot;,
+            &quot;nameEn&quot;: &quot;G 63&quot;
+        },
+        &quot;year&quot;: 2022,
+        &quot;price&quot;: 7750000,
+        &quot;carStatus&quot;: 1
+    },
+    {
+        &quot;thumbnail&quot;: &quot;Engines/615d853f79650690cbb72bc1_52d84825-be4d-45e6-88db-7d69827b0978.jpeg&quot;,
+        &quot;makeId&quot;: 3,
+        &quot;modelId&quot;: 538,
+        &quot;make&quot;: {
+            &quot;id&quot;: 3,
+            &quot;nameAr&quot;: &quot;مرسيدس&quot;,
+            &quot;nameEn&quot;: &quot;Mercedes&quot;
+        },
+        &quot;model&quot;: {
+            &quot;id&quot;: 538,
+            &quot;nameAr&quot;: &quot;GLA 200&quot;,
+            &quot;nameEn&quot;: &quot;GLA 200&quot;
+        },
+        &quot;year&quot;: 2023,
+        &quot;price&quot;: 2025000,
+        &quot;carStatus&quot;: 1
+    },
+    {
+        &quot;thumbnail&quot;: &quot;Engines/60199e1b110a623ace6356f8_12e90ba4-42bf-4059-9d27-7f9566f8bd29.jpeg&quot;,
+        &quot;makeId&quot;: 3,
+        &quot;modelId&quot;: 1208,
+        &quot;make&quot;: {
+            &quot;id&quot;: 3,
+            &quot;nameAr&quot;: &quot;مرسيدس&quot;,
+            &quot;nameEn&quot;: &quot;Mercedes&quot;
+        },
+        &quot;model&quot;: {
+            &quot;id&quot;: 1208,
+            &quot;nameAr&quot;: &quot;GLC 300 COUPE&quot;,
+            &quot;nameEn&quot;: &quot;GLC 300 COUPE&quot;
+        },
+        &quot;year&quot;: 2022,
+        &quot;price&quot;: 3055000,
+        &quot;carStatus&quot;: 1
+    }
+]
+            &quot;&quot;&quot;;
+
+<span class="fc" id="L241">    private List&lt;CardDto&gt; carLits = new ArrayList&lt;&gt;();</span>
+    private final ObjectMapper mapper;
+
+<span class="fc" id="L244">    public CarService(ObjectMapper mapper) {</span>
+<span class="fc" id="L245">        this.mapper = mapper;</span>
+<span class="fc" id="L246">    }</span>
+
+    @PostConstruct
+    public void initList() throws Throwable, JsonProcessingException {
+<span class="nc" id="L250">        carLits.addAll(Arrays.asList(mapper.readValue(cars, CardDto[].class)));</span>
+<span class="nc" id="L251">    }</span>
+
+    public List&lt;CardDto&gt; getCars() {
+<span class="fc" id="L254">        return carLits;</span>
+    }
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>
