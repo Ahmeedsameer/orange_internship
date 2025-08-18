@@ -1,0 +1,13 @@
+version: "3.9"
+services:
+  mariadb:
+    image: mariadb:latest
+    container_name: mariadb-docker
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: 1234
+      MYSQL_DATABASE: online_store
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
